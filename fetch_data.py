@@ -15,9 +15,6 @@ warnings.filterwarnings('ignore')
 api_key = 'Your API key'
 api_secret = 'Your API Secret'
 
-api_key = 'fd602895-26e0-46e0-849c-b679a4f6df71'
-api_secret = 'xL9QPouWvd8FWW6q6aOU7o4ohV8lsTbItpCSRDcI6jYwOTJkNWExYy05ZjY0LTQxZDAtOTdkZi1hYzhlZDAwNTBjZjc'
-
 
 # This function establishes a connection to the exchange, retrieves historical data, and formats it into a pandas dataframe.
 async def async_ohlcv(symbol, timeframe):
