@@ -1,3 +1,5 @@
+'''Functions for print statements that display current market data, data on currently open positions, and data on overall profitability of the strategy.'''
+
 
 def print_no_positoin(df, current_price, long_profit, long_loss, short_profit, short_loss, balance, initial_balance, total):
     width = 20

@@ -3,8 +3,12 @@
 only, it is not profitable.
 
 This is the main script used to run the trading bot. It operates in a loop, analyzing data based on the designated timeframe when
-there are no open positions. It calls funcitons that are used to gather account data which is necessary for opening a position. It
-also fetches historical data used in analysis when determing whehter or not to open a position.
+there are no open positions. This is because analyzing data based on market ticks is not easily transferrable to developing a strategy on historical 
+tick data. Datasets on tick data are very costly and very large, working with tick data is not viable. Therefore, if you develop a strategy based
+on a certain timeframe, you should deploy your strategy in the same way when moving to live market analysis. 
+
+The script calls funcitons that are used to gather account data which is necessary for opening a position. It also fetches historical data used in analysis 
+when determing whehter or not to open a position.
 
 When a position is opened, it pulls data continuosly to monitor whether or not price has reached a threshold that would close the
 position for a profit or a loss.'''
@@ -26,8 +30,8 @@ warnings.filterwarnings('ignore', category=FutureWarning)
 api_key = 'Your API key'
 api_secret = 'Your API Secret'
 
-
-# Initialize exchange parameters and variables to track positions
+# Initialize exchange parameters and variables to track positions, ccxt documentation is linked in the README, if you wish to operate this program through
+# a different exchange, consider what exchanges are available through ccxt
 exchange = ccxt.phemex({
     'apiKey': api_key,
     'secret': api_secret,
@@ -37,19 +41,7 @@ exchange = ccxt.phemex({
 base_currency = 'USDT'
 symbol = 'BTC/USDT:USDT'
 timeframe = '5m'
-paper_trade = True # Setting to true enables paper trading, where the script will not place actual trades, but keep track of trades that would have been made, showing the effectiveness of the strategy without risking capital
-interval = 5
-
-# Set the initial balance of the account to track overall profit/loss
-free, used, total = fetch_data.fetch_balance(base_currency)
-initial_balance = free
-balance = initial_balance
-
-# Adjust these to trade desired base currency/asset
-base_currency = 'USDT'
-symbol = 'BTC/USDT:USDT'
-timeframe = '5m'
-interval = 5
+interval = 5 # 5 for 5min timeframe, 15 for 15min timeframe, 60 for 1hr, etc...
 
 # Set the initial balance of the account to track overall profit/loss
 free, used, total = fetch_data.fetch_balance(base_currency)
@@ -62,7 +54,7 @@ start = 0 # Data is gathered in increments aligned with the timeframe, this vara
 open_position = False
 buy = 0 # This variable is used to identify when a long position is open
 sell = 0 # This variable is used to identify when a short position is open
-risk = 0.1 # Set this to the amount you want to risk per trade
+risk = 0.01 # Set this to the amount you want to risk per trade
 reward = 1 # This variable is the ratio between a winning position and a losing position, setting to 1 means that each winning trade and losing trade will cancel each other out
 long_profit = 0 # Number of winning long positions
 short_profit = 0 # Number of winning short positions
@@ -76,7 +68,8 @@ current_minute = 0
 
 '''
 This loop accomplishes two things, it fetches data at the timeframe interval when there are no positions open, and
-it fetches ticker data continuosly when there are poisiotns open to minimize slippage when closing the position.'''
+it fetches ticker data continuosly when there are positions open to minimize slippage (change in price between when the api call is sent to when 
+the action happens on the exchange) when closing the position.'''
 while True:
     try:
 
@@ -134,14 +127,14 @@ while True:
                 open_position = True
                 buy = 1
                 sell = 0
-                leverage = math.floor(risk / (abs(((initial_price - sl) / initial_price)) + 0.0015)) # Set leverage so that the difference in price between opening and closing a position will result in the designated risk above
+                leverage = math.floor(risk / (abs(((initial_price - sl) / initial_price)) + 0.0015)) # Set leverage so that the difference in price between opening and closing a position will result in the designated risk level assigned above
                 if leverage > 100:
                     leverage = 100
-                tp = initial_price * (1 + (((reward / (1 - (risk + 0.0015))) - 1) / leverage)) # Set profit level so that closing a position will match the risk/reward ratio dsignated above
+                tp = initial_price * (1 + (((reward / (1 - (risk + 0.0015))) - 1) / leverage)) # Set profit level so that closing a position will match the risk/reward ratio designated above
 
                 free, used, total = fetch_data.fetch_balance(base_currency)
                 exchange.set_leverage(leverage, symbol, {"hedged":True})
-                quantity = position_management.find_quantity(free * 0.9, leverage, current_price) #Amount sent to the exchange is needs to be converted based on the currency being traded
+                quantity = position_management.find_quantity(free * 0.9, leverage, current_price) #Amount sent to the exchange needs to be converted based on the price of currency being traded
 
                 position_management.buy_asset(quantity, symbol) # API call for opening a long position
 

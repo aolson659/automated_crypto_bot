@@ -3,7 +3,7 @@
 ## Description
 automated_crypto_bot has the capability to autonomously trade cryptocurrencies through exchanges that are available in the ccxt library. The strategy currently built into the program is simple and for demonstration purposes only, do not run this on a live account, the strategy is not profitable.
 
-The origin of this project came out of necessity, I was already developing a trading bot through the platform trality.com. This site offered a web-based python editor and the capability to connect to cryptocurrency exchanges, however, the platform ceased operations and I decided to work towards building this capability myself.
+The origin of this project emerged from practical circumstances. I was initially developing a trading bot through the platform trality.com, which provided a web-based Python editor and the capability to connect to cryptocurrency exchanges. However, when the platform ceased operations, I decided to undertake the task of building this capability myself.
 
 The code provided operates in a loop, analyzing historical data and making decisions on whether to open a long position or a short position. It monitors price closely once a position is opened, and will close the position if the price reaches a designated level.
 
@@ -38,6 +38,8 @@ Again, this will perform actions on a live account if you decide to run this usi
 ### Running the program
 You will need to generate API keys and fund an account on one of the exchanges available in your region, as well as an exchange available through the ccxt library.
 
+ccxt documentation can be found here: [CCXT Documentation](https://docs.ccxt.com/#/)
+
 You can assign your API keys to a variable within the script, however, I would suggest storing your API keys in a separate configuration file.
 
 The program operates in a loop, so it will need to be ran continuously. You can do this in an editor, or you can use `nohup` to run it in the background.
@@ -46,7 +48,7 @@ To run nohup:
 - nohup python main.py
 
 ### Features
-This project's purpose is to provide an outline for running an automated crypto trading program. Stocks, cryptocurrencies, and other financial markets can be described as chaotic time series, which are inherently unpredictable. Running this program should only be done after thorough testing has been completed. Testing can be done by backtesting strategies on historical data, or it can be done by paper trading (placing fictional trades, risking no money) which is an option using paper_trade.py
+This project's purpose is to provide an outline for running an automated cryptocurrency trading program. Stocks, cryptocurrencies, and other financial markets can be described as chaotic time series, which are inherently unpredictable. Running this program should only be done after thorough testing has been completed. Testing can be done by backtesting strategies on historical data, or it can be done by paper trading (placing fictional trades, risking no money) which is an option using paper_trade.py
 
 Example output while no open position:
 
@@ -92,6 +94,6 @@ Short TP 103533.061
 Long SL 102725.548
 
 ### Contact
-For collaboration and troubleshooting, you can reach me at aolsondm@gmail.com
+For collaboration, troubleshooting, and potential job offers, you can reach me at aolsondm@gmail.com
 
 

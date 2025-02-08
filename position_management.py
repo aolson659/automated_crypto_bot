@@ -109,7 +109,7 @@ if __name__ == '__main__':
 
     print('Available balance', free)
 
-    # This code will open a long position as long as the api keys are valid and there is enough base currency in the account, it will then close the position
+    # This code will open a long position as long as the api keys are valid and there is enough base currency in the account, it will then close the position after a short delay
     if test_long:
         input('Press enter to open a long position...')
         exchange.set_leverage(leverage, symbol, {"hedged":True})

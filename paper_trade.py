@@ -1,13 +1,7 @@
 
-'''I want to mention this again, do not run this script on a live account, the strategy in this script is for demenstraion puposes
-only, it is not profitable.
-
-This is the main script used to run the trading bot. It operates in a loop, analyzing data based on the designated timeframe when
-there are no open positions. It calls funcitons that are used to gather account data which is necessary for opening a position. It
-also fetches historical data used in analysis when determing whehter or not to open a position.
-
-When a position is opened, it pulls data continuosly to monitor whether or not price has reached a threshold that would close the
-position for a profit or a loss.'''
+'''This script is very similar to main.py, however it will not place trades on the exchange. It will instead place paper trades, acting the same way as 
+if it were to open a real trade. Keeping track of metrics and profitability. This allows the user to test a strategy on live market data without 
+risking any capital.'''
 
 import ccxt
 import time
@@ -35,7 +29,6 @@ exchange = ccxt.phemex({
 base_currency = 'USDT'
 symbol = 'BTC/USDT:USDT'
 timeframe = '5m'
-paper_trade = True # Setting to true enables paper trading, where the script will not place actual trades, but keep track of trades that would have been made, showing the effectiveness of the strategy without risking capital
 interval = 5
 
 # Set the initial balance of the account to track overall profit/loss
@@ -125,7 +118,7 @@ while True:
                     leverage = 1
                 if leverage > 100:
                     leverage = 100
-                tp = initial_price * (1 + (((reward / (1 - (risk + 0.0015))) - 1) / leverage)) # Set profit level so that closing a position will match the risk/reward ratio dsignated above
+                tp = initial_price * (1 + (((reward / (1 - (risk + 0.0015))) - 1) / leverage)) # Set profit level so that closing a position will match the risk/reward ratio designated above
                 continue
 
             # Logic for opening a short position
