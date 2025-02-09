@@ -1,2 +1,2 @@
 pandas==1.1.3
-ccxt==1.30.59
+ccxt
