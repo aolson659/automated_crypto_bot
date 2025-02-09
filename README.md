@@ -48,7 +48,7 @@ To run nohup:
 - nohup python main.py
 
 ### Features
-This project's purpose is to provide an outline for running an automated cryptocurrency trading program. Stocks, cryptocurrencies, and other financial markets can be described as chaotic time series, which are inherently unpredictable. Running this program should only be done after thorough testing has been completed. Testing can be done by backtesting strategies on historical data, or it can be done by paper trading (placing fictional trades, risking no money) which is an option using paper_trade.py
+This project's purpose is to provide an outline for running an automated cryptocurrency trading program. Stocks, cryptocurrencies, and other financial markets can be described as chaotic time series, which are inherently unpredictable. Running this program should only be done after thorough testing has been completed. Testing can be done by backtesting strategies on historical data, or it can be done by paper trading (placing fictional trades, risking no capital) which is an option using paper_trade.py
 
 Example output while no open position:
 
